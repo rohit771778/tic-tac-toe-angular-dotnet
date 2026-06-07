@@ -1,0 +1,78 @@
+<h1>Tic Tac Toe</h1>
+
+<p>Rows Count: {{ game?.board?.length }}</p>
+
+<div *ngIf="game"></div>
+
+
+
+<!-- Current Player -->
+<h3>
+  Current Player:
+  {{ game?.currentPlayer === 0 ? 'X' : 'O' }}
+</h3>
+
+<!-- Winner -->
+<div *ngIf="game?.winner !== null">
+  Winner:
+  {{ game?.winner === 0 ? 'X' : 'O' }}
+</div>
+
+<!-- Board -->
+<div class="board">
+
+  <div
+    class="board-row"
+    *ngFor="let row of game.board; let rowIndex = index">
+
+    <button
+      class="cell"
+      *ngFor="let cell of row; let colIndex = index"
+      (click)="makeMove(rowIndex, colIndex)">
+
+      {{ cell || ' ' }}
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- Buttons -->
+<div class="actions">
+  <button (click)="undo()">Undo</button>
+  <button (click)="resetGame()">Reset Game</button>
+</div>
+
+<!-- Move History -->
+<h3>Move History</h3>
+
+<table border="1" *ngIf="game">
+  <tr>
+    <th>Move</th>
+    <th>Player</th>
+    <th>Position</th>
+  </tr>
+
+  <tr *ngFor="let move of game.moveHistory">
+    <td>{{ move.moveNumber }}</td>
+    <td>{{ move.player === 0 ? 'X' : 'O' }}</td>
+    <td>
+      Row {{ move.row + 1 }},
+      Column {{ move.column + 1 }}
+    </td>
+  </tr>
+</table>
+
+<!-- Scoreboard -->
+<h3>Scoreboard</h3>
+
+<div *ngIf="scoreboard">
+  <p>X Wins: {{ scoreboard.xWins }}</p>
+  <p>O Wins: {{ scoreboard.oWins }}</p>
+  <p>Draws: {{ scoreboard.draws }}</p>
+
+  <button (click)="resetScoreboard()">
+    Reset Scoreboard
+  </button>
+</div>
